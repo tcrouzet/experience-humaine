@@ -3,18 +3,23 @@ import html
 import re
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 SITE_URL = "https://tcrouzet.github.io/experience-humaine"
 LINK = re.compile(r"\[([^]]+)]\(([^)]+)\)")
 FIELD = re.compile(r"^([^: ]+)[  ]*:[  ]*(.+)$")
 
 
 def emphasis(text):
-    parts = re.split(r"(\*[^*]+\*)", text)
-    return "".join(
-        f"<em>{html.escape(part[1:-1])}</em>" if part.startswith("*") else html.escape(part)
-        for part in parts
-    )
+    parts = re.split(r"(\*\*[^*]+\*\*|\*[^*]+\*)", text)
+    output = []
+    for part in parts:
+        if part.startswith("**"):
+            output.append(f"<strong>{html.escape(part[2:-2])}</strong>")
+        elif part.startswith("*"):
+            output.append(f"<em>{html.escape(part[1:-1])}</em>")
+        else:
+            output.append(html.escape(part).replace(r"\n", "<br>"))
+    return "".join(output)
 
 
 def inline(text):
@@ -65,6 +70,7 @@ def section_header(title):
     if not title:
         return ""
     return f'<header class="section-heading"><h2>{inline(title)}</h2></header>'
+
 
 author_match = LINK.fullmatch(fields["Auteur"])
 if not author_match:

@@ -46,8 +46,8 @@ Après : Le récit traverse la mort, le travail du deuil et la possibilité de c
 
 ## Action
 
-Bouton : [Manuscrit de 400 000 signes disponible en PDF, Docx, ePub sur demande](https://tcrouzet.com/page/mail/)
+Bouton : [**Le manuscrit est disponible**\nVous êtes éditeur et souhaitez le recevoir ?\n**Me contacter**](https://tcrouzet.com/page/mail/)
 
 ## Copyright
 
-© [Thierry Crouzet](https://tcrouzet.com/page/mail/), octobre 2026
+© [Thierry Crouzet](https://tcrouzet.com/page/mail/), octobre 2026 - manuscrit de 400K signes, disponible en ePub, PDF et Docx - [télécharger cette présentation](/experience-humaine.pdf)

@@ -6,5 +6,6 @@ python_bin="python3"
 if [[ -x "$script_dir/venv/bin/python" ]]; then
   python_bin="$script_dir/venv/bin/python"
 fi
-"$python_bin" "$script_dir/generate.py"
-"$python_bin" "$script_dir/generate_social.py"
+"$python_bin" "$script_dir/script/generate.py"
+"$python_bin" "$script_dir/script/generate_social.py"
+"$python_bin" "$script_dir/script/generate_pdf.py"
