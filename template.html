@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{description}">
+  <meta name="theme-color" content="#292d2a">
+  <meta property="og:title" content="{title} — {author}">
+  <meta property="og:description" content="{baseline}">
+  <meta property="og:type" content="book">
+  <title>{title} — {author}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Manrope:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <h1>{title_html}</h1>
+        <p class="hero-author"><a href="{author_url}">{author}</a></p>
+        <p class="baseline">{baseline_html}</p>
+      </div>
+      <div class="quote-wrap">
+        <blockquote><p>{citation}</p></blockquote>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="synopsis">
+      {story_header}
+      <div class="prose">{story}</div>
+    </section>
+
+    <section class="resonance">
+      {resonance_header}
+      <ol class="themes">{themes}</ol>
+      <a class="universal" href="{universal_url}">{universal}</a>
+      <a class="text-link" href="{study_url}">{study}</a>
+    </section>
+
+    <section class="references">
+      {references_header}
+      <div class="book-list">{books}</div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="information">
+      <ul class="information-list">
+        <li><a href="{info_author_url}">{info_author}</a></li>
+        <li><a href="{contact_url}">{contact}</a></li>
+        <li>{signs}</li>
+        <li>{type}</li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>
