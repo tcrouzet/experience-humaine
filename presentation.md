@@ -50,4 +50,12 @@ Bouton : [**Le manuscrit est disponible**\nVous êtes éditeur et souhaitez le 
 
 ## Copyright
 
-© [Thierry Crouzet](https://tcrouzet.com/page/mail/), octobre 2026 - manuscrit de 400K signes, disponible en ePub, PDF et Docx - [télécharger cette présentation](/experience-humaine.pdf)
+© [Thierry Crouzet](https://tcrouzet.com/page/mail/), octobre 2026 - manuscrit de 400K signes, disponible en ePub, PDF et Docx - [télécharger cette présentation](experience-humaine.pdf)
+
+## PDF
+
+Récit
+
+400K signes
+
+tc@tcrouzet.com

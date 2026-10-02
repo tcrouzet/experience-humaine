@@ -17,6 +17,7 @@ from reportlab.platypus import KeepTogether, PageBreak, Paragraph, SimpleDocTemp
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "presentation.md"
 OUTPUT = ROOT / "web/experience-humaine.pdf"
+SITE_URL = "https://tcrouzet.github.io/experience-humaine"
 LINK = re.compile(r"\[([^]]+)]\(([^)]+)\)")
 FIELD = re.compile(r"^([^: ]+)[  ]*:[  ]*(.+)$")
 rl_config.invariant = 1
@@ -74,8 +75,11 @@ def inline(text):
     output, position = [], 0
     for match in LINK.finditer(text):
         output.append(emphasis(text[position:match.start()]))
+        url = match[2]
+        if not url.startswith(("http://", "https://")):
+            url = f"{SITE_URL}/{url.lstrip('/')}"
         output.append(
-            f'<link href="{html.escape(match[2], quote=True)}" color="#9c4f39">'
+            f'<link href="{html.escape(url, quote=True)}" color="#9c4f39">'
             f"{emphasis(match[1])}</link>"
         )
         position = match.end()
@@ -106,7 +110,6 @@ for line in lines[1:]:
         sections[current].append(line)
 
 styles = getSampleStyleSheet()
-paper = colors.HexColor("#f3efe7")
 ink = colors.HexColor("#26241f")
 accent = colors.HexColor("#9c4f39")
 body = ParagraphStyle(
@@ -131,14 +134,17 @@ reference = ParagraphStyle(
     borderColor=colors.HexColor("#d8d2c7"), borderWidth=0, borderBottomWidth=0.5,
     borderPadding=8, spaceAfter=5,
 )
-button = ParagraphStyle(
-    "Button", parent=body, fontName="Sans", fontSize=12, leading=18,
-    alignment=TA_CENTER, textColor=paper, backColor=accent,
-    borderPadding=14, spaceBefore=18, spaceAfter=18,
+action_style = ParagraphStyle(
+    "Action", parent=body, fontName="Sans", fontSize=10, leading=15,
+    alignment=TA_CENTER, textColor=ink, spaceAfter=0,
 )
-copyright_style = ParagraphStyle(
-    "Copyright", parent=body, fontName="Sans", fontSize=7.5, leading=11,
-    alignment=TA_CENTER, textColor=colors.HexColor("#6d685e"), spaceBefore=12,
+pdf_meta_first = ParagraphStyle(
+    "PdfMetaFirst", parent=label, alignment=TA_CENTER, fontSize=11, leading=14,
+    spaceBefore=10, spaceAfter=2,
+)
+pdf_meta = ParagraphStyle(
+    "PdfMeta", parent=body, fontName="Sans", fontSize=9, leading=13,
+    alignment=TA_CENTER, textColor=colors.HexColor("#6d685e"), spaceAfter=2,
 )
 
 story = []
@@ -157,14 +163,32 @@ if baseline:
 citation = next((line for line in sections.get("Citation", []) if line), "")
 if citation:
     story.append(Paragraph(inline(citation), quote))
+pdf_lines = [line for line in sections.get("PDF", []) if line]
+if pdf_lines:
+    story.append(Paragraph(inline(pdf_lines[0]), pdf_meta_first))
+    story.extend(Paragraph(inline(line), pdf_meta) for line in pdf_lines[1:])
+action_line = next((line for line in sections.get("Action", []) if line), "")
+action_match = FIELD.fullmatch(action_line)
+if action_match:
+    link_match = LINK.fullmatch(action_match[2])
+    action_text = link_match[1] if link_match else action_match[2]
+    action_content = inline(action_text)
+    if link_match:
+        action_url = html.escape(link_match[2], quote=True)
+        action_content = f'<link href="{action_url}" color="#9c4f39">{action_content}</link>'
+    story.append(Spacer(1, 10 * mm))
+    story.append(KeepTogether([Paragraph(action_content, action_style)]))
 
 for heading, raw_lines in sections.items():
-    if heading in {"Baseline", "Citation", "Action", "Copyright"}:
+    if heading in {"Baseline", "Citation", "Action", "Copyright", "PDF"}:
         continue
     content = [line for line in raw_lines if line]
     if not content:
         continue
-    story.append(PageBreak())
+    if heading.startswith(("Références :", "Références:")):
+        story.append(Spacer(1, 8 * mm))
+    else:
+        story.append(PageBreak())
     displayed = heading_label(heading)
     if displayed:
         story.append(Paragraph(inline(displayed), section_title))
@@ -184,22 +208,6 @@ for heading, raw_lines in sections.items():
             ]))
         else:
             story.append(Paragraph(inline(line), body))
-
-action_line = next((line for line in sections.get("Action", []) if line), "")
-action_match = FIELD.fullmatch(action_line)
-if action_match:
-    link_match = LINK.fullmatch(action_match[2])
-    action_text = link_match[1] if link_match else action_match[2]
-    action_content = inline(action_text)
-    if link_match:
-        action_url = html.escape(link_match[2], quote=True)
-        action_content = f'<link href="{action_url}" color="#f3efe7">{action_content}</link>'
-    story.append(Spacer(1, 12 * mm))
-    story.append(KeepTogether([Paragraph(action_content, button)]))
-
-copyright = next((line for line in sections.get("Copyright", []) if line), "")
-if copyright:
-    story.append(KeepTogether([Paragraph(inline(copyright), copyright_style)]))
 
 document = SimpleDocTemplate(
     str(OUTPUT),
