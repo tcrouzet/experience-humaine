@@ -4,6 +4,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
+SITE_URL = "https://tcrouzet.github.io/experience-humaine"
 LINK = re.compile(r"\[([^]]+)]\(([^)]+)\)")
 FIELD = re.compile(r"^([^: ]+)[  ]*:[  ]*(.+)$")
 
@@ -127,6 +128,8 @@ page = template.format(
     author=html.escape(author),
     author_url=html.escape(author_url, quote=True),
     baseline=html.escape(baseline, quote=True),
+    social_image=f"{SITE_URL}/social-card.png",
+    social_alt=html.escape(f"{title} — {baseline} — {author}", quote=True),
     baseline_html=inline(baseline).replace(" en ", "<br>en ", 1),
     citation=inline(citation),
     story_header=section_header(story_title),

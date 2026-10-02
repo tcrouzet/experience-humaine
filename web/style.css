@@ -19,6 +19,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 .hero { min-height: 100dvh; padding: clamp(64px, 8vw, 112px) clamp(24px, 6vw, 96px); display: grid; align-items: center; color: var(--paper); background: var(--night); }
 .hero-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr); gap: clamp(48px, 8vw, 144px); align-items: center; }
 h1 { margin: 0; font-size: clamp(4.6rem, 11vw, 10rem); font-weight: 400; line-height: 0.73; letter-spacing: -0.055em; }
+h1, h2 { hyphens: none; overflow-wrap: normal; word-break: normal; }
 .hero-author { margin: 32px 0 0; color: var(--accent); font: 600 clamp(1.25rem, 1.8vw, 1.65rem)/1 var(--sans); font-variant-caps: all-small-caps; letter-spacing: 0.14em; }
 .baseline { margin: clamp(48px, 6vw, 80px) 0 0; font-size: clamp(1.7rem, 3vw, 3rem); font-style: italic; line-height: 1; }
 blockquote { position: relative; margin: 0; padding: 48px 0 0 40px; border-left: 1px solid var(--accent); font-size: clamp(1.3rem, 2vw, 1.75rem); font-style: italic; line-height: 1.45; }
@@ -60,7 +61,7 @@ footer { display: flex; flex-direction: column; align-items: center; justify-con
   .hero-grid, .synopsis, .references, .resonance { grid-template-columns: 1fr; }
   .synopsis, .references { row-gap: 56px; }
   .hero-grid { gap: 72px; padding: 32px 0; }
-  h1 { max-width: 100%; font-size: clamp(3.5rem, 19vw, 6rem); overflow-wrap: break-word; }
+  h1 { max-width: 100%; font-size: clamp(3.5rem, 19vw, 6rem); }
   .quote-wrap { padding: 0 8px; }
   blockquote { margin: 0; padding-right: 12px; padding-left: 24px; }
   .themes li, .book-list a { grid-template-columns: 1fr; gap: 12px; }
