@@ -12,7 +12,16 @@ from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import mm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import KeepTogether, PageBreak, Paragraph, SimpleDocTemplate, Spacer
+from reportlab.platypus import (
+    BaseDocTemplate,
+    Frame,
+    KeepTogether,
+    NextPageTemplate,
+    PageBreak,
+    PageTemplate,
+    Paragraph,
+    Spacer,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "presentation.md"
@@ -113,26 +122,26 @@ styles = getSampleStyleSheet()
 ink = colors.HexColor("#26241f")
 accent = colors.HexColor("#9c4f39")
 body = ParagraphStyle(
-    "Body", parent=styles["BodyText"], fontName="Literary", fontSize=12.5,
-    leading=18, textColor=ink, spaceAfter=10, allowWidows=0, allowOrphans=0,
+    "Body", parent=styles["BodyText"], fontName="Literary", fontSize=10.5,
+    leading=14, textColor=ink, spaceAfter=6, allowWidows=0, allowOrphans=0,
 )
 section_title = ParagraphStyle(
-    "Section", parent=body, fontSize=27, leading=29, textColor=accent,
-    spaceAfter=14, keepWithNext=True,
+    "Section", parent=body, fontSize=20, leading=22, textColor=accent,
+    spaceAfter=8, keepWithNext=True,
 )
 label = ParagraphStyle(
-    "Label", parent=body, fontName="Sans-Bold", fontSize=8.5, leading=12,
+    "Label", parent=body, fontName="Sans-Bold", fontSize=7.5, leading=10,
     textColor=accent, spaceAfter=2, keepWithNext=True,
 )
 quote = ParagraphStyle(
-    "Quote", parent=body, fontName="Literary-Italic", fontSize=15, leading=21,
-    leftIndent=12, borderColor=accent, borderWidth=0, borderLeftWidth=1.5,
-    borderPadding=10, spaceBefore=10, spaceAfter=18,
+    "Quote", parent=body, fontName="Literary-Italic", fontSize=11.5, leading=15,
+    leftIndent=8, borderColor=accent, borderWidth=0, borderLeftWidth=1.2,
+    borderPadding=7, spaceBefore=6, spaceAfter=10,
 )
 reference = ParagraphStyle(
-    "Reference", parent=body, fontSize=11.5, leading=16, leftIndent=8,
+    "Reference", parent=body, fontSize=9.5, leading=12, leftIndent=5,
     borderColor=colors.HexColor("#d8d2c7"), borderWidth=0, borderBottomWidth=0.5,
-    borderPadding=8, spaceAfter=5,
+    borderPadding=5, spaceAfter=3,
 )
 action_style = ParagraphStyle(
     "Action", parent=body, fontName="Sans", fontSize=10, leading=15,
@@ -158,11 +167,14 @@ baseline = next((line for line in sections.get("Baseline", []) if line), "")
 if baseline:
     story.append(Paragraph(inline(baseline), ParagraphStyle(
         "Baseline", parent=quote, alignment=TA_CENTER, leftIndent=0,
-        borderLeftWidth=0, fontSize=17, leading=22,
+        borderLeftWidth=0, fontSize=17, leading=22, spaceAfter=18,
     )))
 citation = next((line for line in sections.get("Citation", []) if line), "")
 if citation:
-    story.append(Paragraph(inline(citation), quote))
+    story.append(Paragraph(inline(citation), ParagraphStyle(
+        "CoverQuote", parent=quote, fontSize=15, leading=21, leftIndent=12,
+        borderLeftWidth=1.5, borderPadding=10, spaceBefore=10, spaceAfter=18,
+    )))
 pdf_lines = [line for line in sections.get("PDF", []) if line]
 if pdf_lines:
     story.append(Paragraph(inline(pdf_lines[0]), pdf_meta_first))
@@ -179,16 +191,19 @@ if action_match:
     story.append(Spacer(1, 10 * mm))
     story.append(KeepTogether([Paragraph(action_content, action_style)]))
 
+story.append(NextPageTemplate("Content"))
+first_section = True
 for heading, raw_lines in sections.items():
     if heading in {"Baseline", "Citation", "Action", "Copyright", "PDF"}:
         continue
     content = [line for line in raw_lines if line]
     if not content:
         continue
-    if heading.startswith(("Références :", "Références:")):
-        story.append(Spacer(1, 8 * mm))
-    else:
+    if first_section:
         story.append(PageBreak())
+        first_section = False
+    else:
+        story.append(Spacer(1, 5 * mm))
     displayed = heading_label(heading)
     if displayed:
         story.append(Paragraph(inline(displayed), section_title))
@@ -209,14 +224,50 @@ for heading, raw_lines in sections.items():
         else:
             story.append(Paragraph(inline(line), body))
 
-document = SimpleDocTemplate(
+page_width, page_height = A4
+horizontal_margin = 18 * mm
+vertical_margin = 16 * mm
+gutter = 9 * mm
+frame_height = page_height - 2 * vertical_margin
+column_width = (page_width - 2 * horizontal_margin - gutter) / 2
+frame_options = {
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 0,
+    "bottomPadding": 0,
+}
+cover_frame = Frame(
+    horizontal_margin,
+    vertical_margin,
+    page_width - 2 * horizontal_margin,
+    frame_height,
+    id="cover",
+    **frame_options,
+)
+left_frame = Frame(
+    horizontal_margin,
+    vertical_margin,
+    column_width,
+    frame_height,
+    id="left",
+    **frame_options,
+)
+right_frame = Frame(
+    horizontal_margin + column_width + gutter,
+    vertical_margin,
+    column_width,
+    frame_height,
+    id="right",
+    **frame_options,
+)
+document = BaseDocTemplate(
     str(OUTPUT),
     pagesize=A4,
-    rightMargin=22 * mm,
-    leftMargin=22 * mm,
-    topMargin=20 * mm,
-    bottomMargin=18 * mm,
     title=title,
     author=author,
 )
+document.addPageTemplates([
+    PageTemplate(id="Cover", frames=[cover_frame]),
+    PageTemplate(id="Content", frames=[left_frame, right_frame]),
+])
 document.build(story)

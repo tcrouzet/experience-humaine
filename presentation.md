@@ -39,6 +39,8 @@ Après : Le récit traverse la mort, le travail du deuil et la possibilité de c
 
 ## Références : Une littérature du deuil
 
+Se classe dans une famille de récits à succès…
+
 * [*Ghost Stories*](https://www.gallimard.fr/catalogue/ghost-stories/9782073132758), Siri Hustvedt, 2026, Gallimard
 * [*Vivre avec nos morts. Petit traité de consolation*](https://www.grasset.fr/livre/vivre-avec-nos-morts-9782246826941/), Delphine Horvilleur, 2021, Grasset
 * [*Le Lambeau*](https://www.gallimard.fr/catalogue/le-lambeau/9782072873706), Philippe Lançon, 2018, Gallimard

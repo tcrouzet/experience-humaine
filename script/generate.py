@@ -91,9 +91,12 @@ if not action_match:
 
 reference_key, references_heading, references_intro = named_section("Références")
 reference_lines = [line for line in sections[reference_key] if line]
-books = []
+books, reference_notes = [], []
 book_pattern = re.compile(r"^\* \[\*(.+)\*]\(([^)]+)\), (.+), (\d{4}), (.+)$")
 for line in reference_lines:
+    if not line.startswith("* "):
+        reference_notes.append(f'<p class="reference-intro">{inline(line)}</p>')
+        continue
     match = book_pattern.fullmatch(line)
     if not match:
         raise SystemExit(f"Référence invalide: {line}")
@@ -141,6 +144,7 @@ page = template.format(
     story_header=section_header(story_title),
     story=paragraphs(sections[story_key]),
     references_header=section_header(references_intro),
+    reference_notes="\n        ".join(reference_notes),
     books="\n        ".join(books),
     resonance_header=section_header(kicker),
     themes="\n        ".join(themes),
