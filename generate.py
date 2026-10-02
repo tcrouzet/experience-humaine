@@ -46,7 +46,7 @@ for line in lines[1:]:
 required = {"Auteur"}
 if missing := required - fields.keys():
     raise SystemExit(f"Champs manquants dans presentation.md: {', '.join(sorted(missing))}")
-for heading in ("Baseline", "Citation", "Informations"):
+for heading in ("Baseline", "Citation", "Action", "Copyright"):
     if heading not in sections:
         raise SystemExit(f"Section manquante dans presentation.md: {heading}")
 
@@ -70,20 +70,17 @@ if not author_match:
     raise SystemExit("Le champ Auteur doit être un lien Markdown")
 author, author_url = author_match.groups()
 
-information = {}
-for line in sections["Informations"]:
+action = {}
+for line in sections["Action"]:
     if not line:
         continue
     match = FIELD.fullmatch(line)
     if not match:
-        raise SystemExit(f"Information invalide: {line}")
-    information[match[1].strip()] = match[2].strip()
-if missing := {"Auteur", "Contact", "Signes", "Type"} - information.keys():
-    raise SystemExit(f"Informations manquantes: {', '.join(sorted(missing))}")
-info_author_match = LINK.fullmatch(information["Auteur"])
-contact_match = LINK.fullmatch(information["Contact"])
-if not info_author_match or not contact_match:
-    raise SystemExit("Auteur et Contact doivent être des liens Markdown")
+        raise SystemExit(f"Action invalide: {line}")
+    action[match[1].strip()] = match[2].strip()
+action_match = LINK.fullmatch(action.get("Bouton", ""))
+if not action_match:
+    raise SystemExit("La section Action doit contenir un Bouton lié")
 
 reference_key, references_heading, references_intro = named_section("Références")
 reference_lines = [line for line in sections[reference_key] if line]
@@ -120,16 +117,15 @@ if not universal_match or not study_match or resonance:
 
 baseline = next(line for line in sections["Baseline"] if line)
 citation = next(line for line in sections["Citation"] if line)
+copyright = next(line for line in sections["Copyright"] if line)
 story_key, story_heading, story_title = named_section("Quatrième")
 template = (ROOT / "template.html").read_text(encoding="utf-8")
 page = template.format(
     title=html.escape(title),
     title_html=html.escape(title).replace(" ", "<br>", 1),
-    description=html.escape(f"{title}, un {information['Type'].lower()} de {author} sur l’amour, la maladie et le deuil.", quote=True),
+    description=html.escape(f"{title} de {author} — {baseline}", quote=True),
     author=html.escape(author),
     author_url=html.escape(author_url, quote=True),
-    signs=html.escape(information["Signes"]),
-    type=html.escape(information["Type"]),
     baseline=html.escape(baseline, quote=True),
     baseline_html=inline(baseline).replace(" en ", "<br>en ", 1),
     citation=inline(citation),
@@ -143,9 +139,8 @@ page = template.format(
     universal_url=html.escape(universal_match[2], quote=True),
     study=inline(study_match[1]),
     study_url=html.escape(study_match[2], quote=True),
-    info_author=emphasis(info_author_match[1]),
-    info_author_url=html.escape(info_author_match[2], quote=True),
-    contact=emphasis(contact_match[1]),
-    contact_url=html.escape(contact_match[2], quote=True),
+    action=inline(action_match[1]),
+    action_url=html.escape(action_match[2], quote=True),
+    copyright=inline(copyright),
 )
 (ROOT / "web/index.html").write_text(page, encoding="utf-8")

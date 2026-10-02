@@ -1,6 +1,6 @@
 # L’expérience humaine
 
-Auteur : [Thierry Crouzet](https://tcrouzet.com/page/mail/)
+Auteur : [Thierry Crouzet](https://tcrouzet.com/)
 
 
 ## Baseline
@@ -15,7 +15,7 @@ Lors d’un de tes rares moments de conscience, je t’ai dit combien je t’aim
 
 Sur les rives de l’étang de Thau, dans la maison que dix ans de tournage de la série *Candice Renoir* ont rendue célèbre, vit une femme dont personne ne parle. C’est précisément ce qu’elle veut.
 
-Isa, ancienne businesswoman avec quelques célébrités sulfureuses dans sa famille, a fait de la discrétion une philosophie : ne pas se mettre au centre, laisser de la place, habiter chaque instant sans en faire une démonstration. Son mari l’appelle la femme du futur parce qu’elle croit à la coopération contre la compétition, aux sourires contre les vociférations.
+Isa, ancienne businesswoman avec quelques personnalités sulfureuses dans sa famille, a fait de la discrétion une philosophie : ne pas se mettre au centre, laisser de la place, habiter chaque instant sans en faire une démonstration. Son mari l’appelle la femme du futur parce qu’elle croit à la coopération contre la compétition, aux sourires contre les vociférations.
 
 Quand le cancer la frappe, elle applique la même règle. La maladie comme la douleur ne sont pas intéressantes. Ce qui est intéressant, c’est vivre jusqu’au bout.
 
@@ -44,11 +44,10 @@ Après : Le récit traverse la mort, le travail du deuil et la possibilité de c
 * [*Le Lambeau*](https://www.gallimard.fr/catalogue/le-lambeau/9782072873706), Philippe Lançon, 2018, Gallimard
 * [*L’Idée ridicule de ne plus jamais te revoir*](https://editions-metailie.com/livre/lidee-ridicule-de-ne-plus-jamais-te-revoir/), Rosa Montero, 2015, Métailié
 
-## Informations
+## Action
 
-Auteur : [Thierry Crouzet](https://tcrouzet.com/)
+Bouton : [Manuscrit de 400 000 signes disponible en PDF, Docx, ePub sur demande](https://tcrouzet.com/page/mail/)
 
-Type : Récit
-Signes : Manuscrit de 400 000 signes disponibles en PDF, Docx, ePub
+## Copyright
 
-Contact : [Contact](https://tcrouzet.com/page/mail/)
+© [Thierry Crouzet](https://tcrouzet.com/page/mail/), octobre 2026
