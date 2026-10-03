@@ -150,8 +150,8 @@ reference = ParagraphStyle(
     borderPadding=5, spaceAfter=3,
 )
 reference_source = ParagraphStyle(
-    "ReferenceSource", parent=body, fontName="Sans", fontSize=7.5, leading=10,
-    textColor=muted, spaceBefore=2, spaceAfter=2,
+    "ReferenceSource", parent=body, fontName="Sans", fontSize=8.5, leading=11,
+    leftIndent=8, rightIndent=8, textColor=muted, spaceBefore=2, spaceAfter=2,
 )
 pdf_meta_first = ParagraphStyle(
     "PdfMetaFirst", parent=label, alignment=TA_CENTER, fontSize=11, leading=14,
