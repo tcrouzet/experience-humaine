@@ -81,17 +81,21 @@ def emphasis(text):
     return "".join(output)
 
 
+def link_markup(match, color):
+    url = match[2]
+    if not url.startswith(("http://", "https://")):
+        url = f"{SITE_URL}/{url.lstrip('/')}"
+    return (
+        f'<link href="{html.escape(url, quote=True)}" color="{color}">'
+        f"{emphasis(match[1])}</link>"
+    )
+
+
 def inline(text):
     output, position = [], 0
     for match in LINK.finditer(text):
         output.append(emphasis(text[position:match.start()]))
-        url = match[2]
-        if not url.startswith(("http://", "https://")):
-            url = f"{SITE_URL}/{url.lstrip('/')}"
-        output.append(
-            f'<link href="{html.escape(url, quote=True)}" color="{PALETTE["accent"]}">'
-            f"{emphasis(match[1])}</link>"
-        )
+        output.append(link_markup(match, PALETTE["accent"]))
         position = match.end()
     output.append(emphasis(text[position:]))
     return "".join(output)
@@ -144,6 +148,10 @@ reference = ParagraphStyle(
     "Reference", parent=body, fontSize=9.5, leading=12, leftIndent=5,
     borderColor=muted, borderWidth=0, borderBottomWidth=0.5,
     borderPadding=5, spaceAfter=3,
+)
+reference_source = ParagraphStyle(
+    "ReferenceSource", parent=body, fontName="Sans", fontSize=7.5, leading=10,
+    textColor=muted, spaceBefore=2, spaceAfter=2,
 )
 pdf_meta_first = ParagraphStyle(
     "PdfMetaFirst", parent=label, alignment=TA_CENTER, fontSize=11, leading=14,
@@ -199,6 +207,11 @@ for heading, raw_lines in sections.items():
             story.append(KeepTogether([Paragraph(f"• {inline(line[2:])}", reference)]))
         elif line.startswith("> "):
             story.append(KeepTogether([Paragraph(inline(line[2:]), quote)]))
+        elif (
+            heading.startswith(("Références :", "Références:"))
+            and (match := LINK.fullmatch(line))
+        ):
+            story.append(Paragraph(link_markup(match, PALETTE["muted"]), reference_source))
         elif (
             heading.startswith(("Argumentaire :", "Argumentaire:"))
             and not line.startswith("[")

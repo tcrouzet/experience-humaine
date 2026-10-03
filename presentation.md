@@ -41,10 +41,6 @@ Pensée : La réflexion philosophique naît des scènes vécues, du corps, de l
 
 Après : Le récit traverse la mort, le travail du deuil et la possibilité de continuer à vivre.
 
-> [Une expérience singulière pour des questions communes : que devient un couple quand l’un des deux va mourir ? Que reste-t-il d’une personne après sa mort ?](https://www.fabula.org/actualites/136859/ecrire-le-deuil-aujourd-hui-entre-genres-traditionnels-et-innovation-formelle-paris-sorbonne.html)
-
-[Écrire le deuil aujourd’hui — journée d’étude, Sorbonne 2026](https://www.fabula.org/actualites/136859/ecrire-le-deuil-aujourd-hui-entre-genres-traditionnels-et-innovation-formelle-paris-sorbonne.html)
-
 ## Références : Une littérature du deuil
 
 Se classe dans une famille de récits à succès…
@@ -53,6 +49,11 @@ Se classe dans une famille de récits à succès…
 * [*Vivre avec nos morts. Petit traité de consolation*](https://www.grasset.fr/livre/vivre-avec-nos-morts-9782246826941/), Delphine Horvilleur, 2021, Grasset
 * [*Le Lambeau*](https://www.gallimard.fr/catalogue/le-lambeau/9782072873706), Philippe Lançon, 2018, Gallimard
 * [*L’Idée ridicule de ne plus jamais te revoir*](https://editions-metailie.com/livre/lidee-ridicule-de-ne-plus-jamais-te-revoir/), Rosa Montero, 2015, Métailié
+
+> Une expérience singulière pour des questions communes : que devient un couple quand l’un des deux va mourir ? Que reste-t-il d’une personne après sa mort ?
+
+[Écrire le deuil aujourd’hui — journée d’étude, Sorbonne 2026](https://www.fabula.org/actualites/136859/ecrire-le-deuil-aujourd-hui-entre-genres-traditionnels-et-innovation-formelle-paris-sorbonne.html)
+
 
 ## Action
 

@@ -91,39 +91,34 @@ if not action_match:
 
 reference_key, references_heading, references_intro = named_section("Références")
 reference_lines = [line for line in sections[reference_key] if line]
-books, reference_notes = [], []
+references = []
 book_pattern = re.compile(r"^\* \[\*(.+)\*]\(([^)]+)\), (.+), (\d{4}), (.+)$")
 for line in reference_lines:
+    if line.startswith("> "):
+        references.append(f'<p class="reference-context">{inline(line[2:])}</p>')
+        continue
+    if LINK.fullmatch(line):
+        references.append(f'<p class="reference-source">{inline(line)}</p>')
+        continue
     if not line.startswith("* "):
-        reference_notes.append(f'<p class="reference-intro">{inline(line)}</p>')
+        references.append(f'<p class="reference-intro">{inline(line)}</p>')
         continue
     match = book_pattern.fullmatch(line)
     if not match:
         raise SystemExit(f"Référence invalide: {line}")
     book, url, writer, year, publisher = match.groups()
-    books.append(
+    references.append(
         f'<a href="{html.escape(url, quote=True)}"><span class="book-title">{html.escape(book)}</span>'
         f'<span>{html.escape(writer)} · {year} · {html.escape(publisher)}</span></a>'
     )
 
 resonance_key, resonance_heading, kicker = named_section("Argumentaire")
-resonance = [line for line in sections[resonance_key] if line]
-theme_lines = []
-while resonance and not resonance[0].startswith("> "):
-    theme_lines.append(resonance.pop(0))
 themes = []
-for line in theme_lines:
+for line in (line for line in sections[resonance_key] if line):
     match = FIELD.fullmatch(line)
     if not match:
         raise SystemExit(f"Thème invalide: {line}")
     themes.append(f"<li><span>{html.escape(match[1].strip())}</span> {inline(match[2].strip())}</li>")
-
-if len(resonance) != 2:
-    raise SystemExit("L’argumentaire doit finir par deux liens")
-universal_match = LINK.fullmatch(resonance.pop(0).removeprefix("> "))
-study_match = LINK.fullmatch(resonance.pop(0))
-if not universal_match or not study_match or resonance:
-    raise SystemExit("Liens finaux invalides dans la dernière section")
 
 baseline = next(line for line in sections["Baseline"] if line)
 citation = next(line for line in sections["Citation"] if line)
@@ -154,14 +149,9 @@ page = template.format(
     story_header=section_header(story_title),
     story=paragraphs(sections[story_key]),
     references_header=section_header(references_intro),
-    reference_notes="\n        ".join(reference_notes),
-    books="\n        ".join(books),
+    references="\n        ".join(references),
     resonance_header=section_header(kicker),
     themes="\n        ".join(themes),
-    universal=inline(universal_match[1]),
-    universal_url=html.escape(universal_match[2], quote=True),
-    study=inline(study_match[1]),
-    study_url=html.escape(study_match[2], quote=True),
     action=inline(action_match[1]),
     action_url=html.escape(action_match[2], quote=True),
     copyright=inline(copyright),
