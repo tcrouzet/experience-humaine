@@ -2,13 +2,23 @@
 import html
 from pathlib import Path
 
+from presentation_data import read_header, read_palette
+
 ROOT = Path(__file__).resolve().parents[1]
-title = (ROOT / "presentation.md").read_text(encoding="utf-8").splitlines()[0].removeprefix("# ")
+title, fields = read_header(ROOT)
+palette = read_palette(ROOT)
+if "Ico" not in fields:
+    raise SystemExit("Le champ Ico est manquant dans presentation.md")
+icon = fields["Ico"]
+if not 1 <= len(icon) <= 3:
+    raise SystemExit("Le champ Ico doit contenir entre un et trois caractères")
+glyphs = html.escape(icon[0])
+if icon[1:]:
+    glyphs += f'<tspan fill="{palette["highlight"]}">{html.escape(icon[1:])}</tspan>'
 svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <title>{html.escape(title)}</title>
-  <rect width="64" height="64" rx="14" fill="#292d2a"/>
-  <path d="M15 14v36m0-36h15M15 32h12M15 50h15" fill="none" stroke="#f3efe7" stroke-width="4"/>
-  <path d="M38 14v36M52 14v36M38 32h14" fill="none" stroke="#d18a72" stroke-width="4"/>
+  <rect width="64" height="64" rx="14" fill="{palette["night"]}"/>
+  <text x="32" y="41" text-anchor="middle" fill="{palette["paper"]}" font-family="Georgia,serif" font-size="28" font-weight="600" letter-spacing="-1">{glyphs}</text>
 </svg>
 '''
 (ROOT / "web/favicon.svg").write_text(svg, encoding="utf-8")

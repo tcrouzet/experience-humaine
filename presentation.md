@@ -2,6 +2,14 @@
 
 Auteur : [Thierry Crouzet](https://tcrouzet.com/)
 
+Ico : XP
+
+Papier : #f3efe7
+Encre : #26241f
+Atténué : #6d685e
+Accent : #9c4f39
+Exergue : #d18a72
+Nuit : #292d2a
 
 ## Baseline
 

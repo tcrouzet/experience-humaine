@@ -22,13 +22,14 @@ from reportlab.platypus import (
     Paragraph,
     Spacer,
 )
+from presentation_data import FIELD, read_header, read_palette
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "presentation.md"
 OUTPUT = ROOT / "web/experience-humaine.pdf"
 SITE_URL = "https://tcrouzet.github.io/experience-humaine"
 LINK = re.compile(r"\[([^]]+)]\(([^)]+)\)")
-FIELD = re.compile(r"^([^: ]+)[  ]*:[  ]*(.+)$")
+PALETTE = read_palette(ROOT)
 rl_config.invariant = 1
 
 
@@ -88,7 +89,7 @@ def inline(text):
         if not url.startswith(("http://", "https://")):
             url = f"{SITE_URL}/{url.lstrip('/')}"
         output.append(
-            f'<link href="{html.escape(url, quote=True)}" color="#9c4f39">'
+            f'<link href="{html.escape(url, quote=True)}" color="{PALETTE["accent"]}">'
             f"{emphasis(match[1])}</link>"
         )
         position = match.end()
@@ -103,8 +104,8 @@ def heading_label(heading):
 
 register_fonts()
 lines = SOURCE.read_text(encoding="utf-8").splitlines()
-title = lines[0].removeprefix("# ")
-author_line = next(line for line in lines[1:] if line.startswith("Auteur"))
+title, fields = read_header(ROOT)
+author_line = fields.get("Auteur", "")
 author_match = LINK.search(author_line)
 if not author_match:
     raise SystemExit("Le champ Auteur doit être un lien Markdown")
@@ -119,8 +120,9 @@ for line in lines[1:]:
         sections[current].append(line)
 
 styles = getSampleStyleSheet()
-ink = colors.HexColor("#26241f")
-accent = colors.HexColor("#9c4f39")
+ink = colors.HexColor(PALETTE["ink"])
+muted = colors.HexColor(PALETTE["muted"])
+accent = colors.HexColor(PALETTE["accent"])
 body = ParagraphStyle(
     "Body", parent=styles["BodyText"], fontName="Literary", fontSize=10.5,
     leading=14, textColor=ink, spaceAfter=6, allowWidows=0, allowOrphans=0,
@@ -140,12 +142,8 @@ quote = ParagraphStyle(
 )
 reference = ParagraphStyle(
     "Reference", parent=body, fontSize=9.5, leading=12, leftIndent=5,
-    borderColor=colors.HexColor("#d8d2c7"), borderWidth=0, borderBottomWidth=0.5,
+    borderColor=muted, borderWidth=0, borderBottomWidth=0.5,
     borderPadding=5, spaceAfter=3,
-)
-action_style = ParagraphStyle(
-    "Action", parent=body, fontName="Sans", fontSize=10, leading=15,
-    alignment=TA_CENTER, textColor=ink, spaceAfter=0,
 )
 pdf_meta_first = ParagraphStyle(
     "PdfMetaFirst", parent=label, alignment=TA_CENTER, fontSize=11, leading=14,
@@ -153,7 +151,7 @@ pdf_meta_first = ParagraphStyle(
 )
 pdf_meta = ParagraphStyle(
     "PdfMeta", parent=body, fontName="Sans", fontSize=9, leading=13,
-    alignment=TA_CENTER, textColor=colors.HexColor("#6d685e"), spaceAfter=2,
+    alignment=TA_CENTER, textColor=muted, spaceAfter=2,
 )
 
 story = []
@@ -179,17 +177,6 @@ pdf_lines = [line for line in sections.get("PDF", []) if line]
 if pdf_lines:
     story.append(Paragraph(inline(pdf_lines[0]), pdf_meta_first))
     story.extend(Paragraph(inline(line), pdf_meta) for line in pdf_lines[1:])
-action_line = next((line for line in sections.get("Action", []) if line), "")
-action_match = FIELD.fullmatch(action_line)
-if action_match:
-    link_match = LINK.fullmatch(action_match[2])
-    action_text = link_match[1] if link_match else action_match[2]
-    action_content = inline(action_text)
-    if link_match:
-        action_url = html.escape(link_match[2], quote=True)
-        action_content = f'<link href="{action_url}" color="#9c4f39">{action_content}</link>'
-    story.append(Spacer(1, 10 * mm))
-    story.append(KeepTogether([Paragraph(action_content, action_style)]))
 
 story.append(NextPageTemplate("Content"))
 first_section = True

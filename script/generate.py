@@ -3,10 +3,11 @@ import html
 import re
 from pathlib import Path
 
+from presentation_data import FIELD, read_header, read_palette
+
 ROOT = Path(__file__).resolve().parents[1]
 SITE_URL = "https://tcrouzet.github.io/experience-humaine"
 LINK = re.compile(r"\[([^]]+)]\(([^)]+)\)")
-FIELD = re.compile(r"^([^: ]+)[  ]*:[  ]*(.+)$")
 
 
 def emphasis(text):
@@ -38,16 +39,15 @@ def paragraphs(lines):
 
 
 lines = (ROOT / "presentation.md").read_text(encoding="utf-8").splitlines()
-title = lines[0].removeprefix("# ")
-sections, fields, current = {}, {}, None
+title, fields = read_header(ROOT)
+palette = read_palette(ROOT)
+sections, current = {}, None
 for line in lines[1:]:
     if line.startswith("## "):
         current = line[3:]
         sections[current] = []
     elif current:
         sections[current].append(line)
-    elif match := FIELD.match(line):
-        fields[match[1].strip()] = match[2].strip()
 
 required = {"Auteur"}
 if missing := required - fields.keys():
@@ -130,6 +130,15 @@ citation = next(line for line in sections["Citation"] if line)
 copyright = next(line for line in sections["Copyright"] if line)
 story_key, story_heading, story_title = named_section("Quatrième")
 template = (ROOT / "template.html").read_text(encoding="utf-8")
+palette_css = ":root {\n" + "\n".join(
+    f"  --{name}: {value};" for name, value in palette.items()
+) + "\n" + """  --line: color-mix(in srgb, var(--ink) 20%, transparent);
+  --night-line: color-mix(in srgb, var(--paper) 22%, transparent);
+  --copyright: color-mix(in srgb, var(--paper) 58%, transparent);
+  --shadow: color-mix(in srgb, var(--night) 20%, transparent);
+}
+"""
+(ROOT / "web/palette.css").write_text(palette_css, encoding="utf-8")
 page = template.format(
     title=html.escape(title),
     title_html=html.escape(title).replace(" ", "<br>", 1),
@@ -139,6 +148,7 @@ page = template.format(
     baseline=html.escape(baseline, quote=True),
     social_image=f"{SITE_URL}/social-card.png",
     social_alt=html.escape(f"{title} — {baseline} — {author}", quote=True),
+    night=palette["night"],
     baseline_html=inline(baseline).replace(" en ", "<br>en ", 1),
     citation=inline(citation),
     story_header=section_header(story_title),

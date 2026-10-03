@@ -1,0 +1,12 @@
+:root {
+  --paper: #f3efe7;
+  --ink: #26241f;
+  --muted: #6d685e;
+  --accent: #9c4f39;
+  --highlight: #d18a72;
+  --night: #292d2a;
+  --line: color-mix(in srgb, var(--ink) 20%, transparent);
+  --night-line: color-mix(in srgb, var(--paper) 22%, transparent);
+  --copyright: color-mix(in srgb, var(--paper) 58%, transparent);
+  --shadow: color-mix(in srgb, var(--night) 20%, transparent);
+}

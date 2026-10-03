@@ -23,8 +23,9 @@ python -m pip install --require-hashes -r requirements.txt
 La commande produit dans `web/` :
 
 - `index.html`, généré depuis `presentation.md` et `template.html` ;
+- `palette.css`, couleurs partagées par le site et les visuels ;
 - `social-card.png`, image utilisée par les métadonnées de partage ;
-- `favicon.svg`, icône du site assortie à la carte sociale ;
+- `favicon.svg`, icône du site créée depuis le champ `Ico` et assortie à la carte sociale ;
 - `experience-humaine.pdf`, version A4 composée directement depuis la présentation.
 
 Les générateurs Python se trouvent dans `script/`. Toute modification du contenu passe par `presentation.md`, puis par `./gen.sh`.
@@ -32,6 +33,8 @@ Les générateurs Python se trouvent dans `script/`. Toute modification du conte
 ## Structure de la présentation
 
 Le titre de niveau 1 et le champ `Auteur` alimentent l’en-tête et les métadonnées. Pour un titre de section contenant deux-points, seule la partie située après les deux-points est affichée. Un titre sans deux-points structure le document sans apparaître dans la page.
+
+Les champs `Papier`, `Encre`, `Atténué`, `Accent`, `Exergue` et `Nuit`, placés après `Ico`, définissent la palette du site, de l’icône, de la carte sociale et du PDF.
 
 Dans le bouton de la section `Action`, `**texte**` produit du gras et la séquence `\n` force un saut de ligne.
 
