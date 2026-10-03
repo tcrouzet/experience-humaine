@@ -2,6 +2,8 @@
 
 Site statique de présentation du roman, généré depuis `presentation.md`. Le site fonctionne sans JavaScript et s’adapte aux écrans mobiles.
 
+Site publié : [tcrouzet.github.io/experience-humaine](https://tcrouzet.github.io/experience-humaine/)
+
 ## Installation
 
 Créer l’environnement Python, l’activer et installer les dépendances :
