@@ -8,4 +8,5 @@ if [[ -x "$script_dir/venv/bin/python" ]]; then
 fi
 "$python_bin" "$script_dir/script/generate.py"
 "$python_bin" "$script_dir/script/generate_social.py"
+"$python_bin" "$script_dir/script/generate_icon.py"
 "$python_bin" "$script_dir/script/generate_pdf.py"

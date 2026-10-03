@@ -22,6 +22,7 @@ La commande produit dans `web/` :
 
 - `index.html`, généré depuis `presentation.md` et `template.html` ;
 - `social-card.png`, image utilisée par les métadonnées de partage ;
+- `favicon.svg`, icône du site assortie à la carte sociale ;
 - `experience-humaine.pdf`, version A4 composée directement depuis la présentation.
 
 Les générateurs Python se trouvent dans `script/`. Toute modification du contenu passe par `presentation.md`, puis par `./gen.sh`.
