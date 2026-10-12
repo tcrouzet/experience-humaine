@@ -43,16 +43,15 @@ Après : Le récit traverse la mort, le travail du deuil et la possibilité de c
 
 ## Références : Une littérature du deuil
 
-Se classe dans une famille de récits à succès…
+Se classe dans une famille de récits à succès : voir analyse de postionnement détaillée [par Claude](Claude.pdf) et [NotebookLM](NotebookLM.pdf).
 
 * [*Ghost Stories*](https://www.gallimard.fr/catalogue/ghost-stories/9782073132758), Siri Hustvedt, 2026, Gallimard
 * [*Vivre avec nos morts. Petit traité de consolation*](https://www.grasset.fr/livre/vivre-avec-nos-morts-9782246826941/), Delphine Horvilleur, 2021, Grasset
+* [*Jacqueline Jacqueline*], Jean-Claude Grumberg, 2021, Le Seuil
 * [*Le Lambeau*](https://www.gallimard.fr/catalogue/le-lambeau/9782072873706), Philippe Lançon, 2018, Gallimard
 * [*L’Idée ridicule de ne plus jamais te revoir*](https://editions-metailie.com/livre/lidee-ridicule-de-ne-plus-jamais-te-revoir/), Rosa Montero, 2015, Métailié
 
-> Une expérience singulière pour des questions communes : que devient un couple quand l’un des deux va mourir ? Que reste-t-il d’une personne après sa mort ?
-
-[Écrire le deuil aujourd’hui — journée d’étude, Sorbonne 2026](https://www.fabula.org/actualites/136859/ecrire-le-deuil-aujourd-hui-entre-genres-traditionnels-et-innovation-formelle-paris-sorbonne.html)
+> Une expérience singulière pour des questions communes : que devient un couple quand l’un des deux va mourir ? Que reste-t-il d’une personne après sa mort ? [Source](https://www.fabula.org/actualites/136859/ecrire-le-deuil-aujourd-hui-entre-genres-traditionnels-et-innovation-formelle-paris-sorbonne.html)
 
 
 ## Action
@@ -65,8 +64,4 @@ Bouton : [**Le manuscrit est disponible**\nVous êtes éditeur et souhaitez le 
 
 ## PDF
 
-Récit
-
-400K signes
-
-tc@tcrouzet.com
+Récit, 400K signes, tc@tcrouzet.com
