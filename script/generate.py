@@ -92,7 +92,7 @@ if not action_match:
 reference_key, references_heading, references_intro = named_section("Références")
 reference_lines = [line for line in sections[reference_key] if line]
 references = []
-book_pattern = re.compile(r"^\* \[\*(.+)\*]\(([^)]+)\), (.+), (\d{4}), (.+)$")
+book_pattern = re.compile(r"^\* \[\*(.+)\*](?:\(([^)]+)\))?, (.+), (\d{4}), (.+)$")
 for line in reference_lines:
     if line.startswith("> "):
         references.append(f'<p class="reference-context">{inline(line[2:])}</p>')
@@ -107,8 +107,9 @@ for line in reference_lines:
     if not match:
         raise SystemExit(f"Référence invalide: {line}")
     book, url, writer, year, publisher = match.groups()
+    href = f' href="{html.escape(url, quote=True)}"' if url else ""
     references.append(
-        f'<a href="{html.escape(url, quote=True)}"><span class="book-title">{html.escape(book)}</span>'
+        f'<a{href}><span class="book-title">{html.escape(book)}</span>'
         f'<span>{html.escape(writer)} · {year} · {html.escape(publisher)}</span></a>'
     )
 

@@ -43,11 +43,11 @@ Après : Le récit traverse la mort, le travail du deuil et la possibilité de c
 
 ## Références : Une littérature du deuil
 
-Se classe dans une famille de récits à succès : voir analyse de postionnement détaillée [par Claude](Claude.pdf) et [NotebookLM](NotebookLM.pdf).
+Se classe dans une famille de récits à succès : voir analyse de postionnement détaillée [par Claude](https://github.com/tcrouzet/experience-humaine/raw/refs/heads/main/web/Claude.pdf) et [NotebookLM](https://github.com/tcrouzet/experience-humaine/raw/refs/heads/main/web/NotebookLM.pdf).
 
 * [*Ghost Stories*](https://www.gallimard.fr/catalogue/ghost-stories/9782073132758), Siri Hustvedt, 2026, Gallimard
 * [*Vivre avec nos morts. Petit traité de consolation*](https://www.grasset.fr/livre/vivre-avec-nos-morts-9782246826941/), Delphine Horvilleur, 2021, Grasset
-* [*Jacqueline Jacqueline*], Jean-Claude Grumberg, 2021, Le Seuil
+* [*Jacqueline Jacqueline*](https://www.seuil.com/ouvrage/jacqueline-jacqueline-jean-claude-grumberg/9782021486155), Jean-Claude Grumberg, 2021, Le Seuil
 * [*Le Lambeau*](https://www.gallimard.fr/catalogue/le-lambeau/9782072873706), Philippe Lançon, 2018, Gallimard
 * [*L’Idée ridicule de ne plus jamais te revoir*](https://editions-metailie.com/livre/lidee-ridicule-de-ne-plus-jamais-te-revoir/), Rosa Montero, 2015, Métailié
 
